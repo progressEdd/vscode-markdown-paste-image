@@ -184,7 +184,7 @@ export function detectDisplayServer(): DisplayServer {
   if (process.env.WAYLAND_DISPLAY) {
     cachedDisplayServer = "wayland";
     console.debug(
-      `[xclip] Detected Wayland via WAYLAND_DISPLAY=${process.env.WAYLAND_DISPLAY}`,
+      `[xclip] Detected Wayland via WAYLAND_DISPLAY=${process.env.WAYLAND_DISPLAY}`
     );
     return cachedDisplayServer;
   }
@@ -194,7 +194,7 @@ export function detectDisplayServer(): DisplayServer {
   if (sessionType === "wayland") {
     cachedDisplayServer = "wayland";
     console.debug(
-      `[xclip] Detected Wayland via XDG_SESSION_TYPE=${sessionType}`,
+      `[xclip] Detected Wayland via XDG_SESSION_TYPE=${sessionType}`
     );
     return cachedDisplayServer;
   }
@@ -245,15 +245,15 @@ class LinuxShell implements IShell {
         return new WaylandClipboard();
       } else if (isToolAvailable("xclip")) {
         console.debug(
-          "[xclip] Warning: Wayland detected but wl-copy not found, falling back to xclip (XWayland)",
+          "[xclip] Warning: Wayland detected but wl-copy not found, falling back to xclip (XWayland)"
         );
         console.debug(
-          "[xclip] For best Wayland support, install wl-clipboard: apt install wl-clipboard",
+          "[xclip] For best Wayland support, install wl-clipboard: apt install wl-clipboard"
         );
         return new LinuxClipboard();
       } else {
         throw new Error(
-          "No clipboard tool available. Install wl-clipboard (recommended for Wayland) or xclip.",
+          "No clipboard tool available. Install wl-clipboard (recommended for Wayland) or xclip."
         );
       }
     }
@@ -265,7 +265,7 @@ class LinuxShell implements IShell {
     }
 
     throw new Error(
-      "xclip not installed. Install with: apt install xclip (or pacman -S xclip)",
+      "xclip not installed. Install with: apt install xclip (or pacman -S xclip)"
     );
   }
 }
@@ -418,7 +418,7 @@ class WaylandClipboard extends BaseClipboard {
     const script = path.join(
       __dirname,
       this.SCRIPT_PATH,
-      "wayland_get_clipboard_text_plain.sh",
+      "wayland_get_clipboard_text_plain.sh"
     );
     const shell = getShell();
     const data: string = await shell.runScript(script);
@@ -430,7 +430,7 @@ class WaylandClipboard extends BaseClipboard {
     const script = path.join(
       __dirname,
       this.SCRIPT_PATH,
-      "wayland_save_clipboard_png.sh",
+      "wayland_save_clipboard_png.sh"
     );
     const shell = getShell();
     const data: string = await shell.runScript(script, [imagePath]);
@@ -441,7 +441,7 @@ class WaylandClipboard extends BaseClipboard {
     const script = path.join(
       __dirname,
       this.SCRIPT_PATH,
-      "wayland_get_clipboard_content_type.sh",
+      "wayland_get_clipboard_content_type.sh"
     );
     try {
       const shell = getShell();
@@ -496,11 +496,13 @@ suite("Clipboard Integration Tests", () => {
 ## Open Questions
 
 1. **Should tests use xclip API directly or through extension's Paster class?**
+
    - What we know: Tests need to validate clipboard operations; Paster class is the extension's main interface
    - What's unclear: Whether to test at xclip level or Paster level
    - Recommendation: Test at xclip level for integration tests (validates xclip submodule), Paster level would be unit tests
 
 2. **How to handle clipboard state in tests without side effects?**
+
    - What we know: Clipboard is global state; tests can interfere with each other
    - What's unclear: Best practice for isolating test clipboard state
    - Recommendation: Sequential test execution, clear clipboard before/after each test, use unique test data

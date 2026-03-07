@@ -23,7 +23,7 @@ Requirements for initial Wayland integration. Each maps to roadmap phases.
 ### Backend Compatibility
 
 - [x] **COMPAT-01**: Extension works identically on X11 and Wayland Linux systems
-- [ ] **COMPAT-02**: No user configuration required for display server detection
+- [x] **COMPAT-02**: No user configuration required for display server detection
 - [x] **COMPAT-03**: Existing X11 users experience no behavior changes
 - [x] **COMPAT-04**: Wayland users can paste text, HTML, and images successfully
 
@@ -52,7 +52,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TEST-03      | Phase 1 | Complete |
 | TEST-04      | Phase 1 | Complete |
 | COMPAT-01    | Phase 1 | Complete |
-| COMPAT-02    | Phase 1 | Pending  |
+| COMPAT-02    | Phase 1 | Complete |
 | COMPAT-03    | Phase 1 | Complete |
 | COMPAT-04    | Phase 1 | Complete |
 
