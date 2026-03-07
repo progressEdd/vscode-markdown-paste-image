@@ -13,12 +13,14 @@ This roadmap adds Wayland display server support to vscode-markdown-paste-image 
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Wayland Integration & Testing** - Update xclip submodule to Wayland fork and add integration tests for all clipboard operations
+- [x] **Phase 1: Wayland Integration & Testing** - Update xclip submodule to Wayland fork and add integration tests for all clipboard operations
+- [ ] **Phase 2: Error Handling Bugfix** - Fix unhandled promise rejection in telesoho.insertMathSymbol command
 
 ## Phase Details
 
 ### Phase 1: Wayland Integration & Testing
 
+**Status:** ✅ Complete
 **Goal**: Extension works seamlessly on Wayland Linux systems with real integration tests validating all clipboard operations
 **Depends on**: Nothing (first phase)
 **Requirements**: SUBMODULE-01, SUBMODULE-02, SUBMODULE-03, TEST-01, TEST-02, TEST-03, TEST-04, COMPAT-01, COMPAT-02, COMPAT-03, COMPAT-04
@@ -34,15 +36,35 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 Plans:
 
-- [ ] 01-01: Update xclip submodule to Wayland-enabled fork (Wave 1)
-- [ ] 01-02: Create integration tests for clipboard operations (Wave 2, depends on 01-01)
-- [ ] 01-03: Update README with Wayland support documentation (Wave 2, depends on 01-01)
+- [x] 01-01: Update xclip submodule to Wayland-enabled fork (Wave 1)
+- [x] 01-02: Create integration tests for clipboard operations (Wave 2, depends on 01-01)
+- [x] 01-03: Update README with Wayland support documentation (Wave 2, depends on 01-01)
+
+### Phase 2: Error Handling Bugfix
+
+**Status:** 🔲 Planning Complete
+**Goal**: Fix unhandled promise rejections in all command handlers
+**Depends on**: Phase 1 complete
+**Requirements**: BUG-01
+**Success Criteria** (what must be TRUE):
+
+1. All command handlers properly await/handle async operations
+2. No "rejected promise not handled" warnings in console
+3. All commands properly registered with context.subscriptions
+4. Context menu "Markdown Paste" works correctly
+5. All paste commands work without errors
+   **Plans**: 1 plan in 1 wave
+
+Plans:
+
+- [ ] 02-01: Fix promise handling in all command handlers (Wave 1)
 
 ## Progress
 
 **Execution Order:**
 Phases execute in numeric order: 1
 
-| Phase                            | Plans Complete | Status      | Completed |
-| -------------------------------- | -------------- | ----------- | --------- |
-| 1. Wayland Integration & Testing | 0/3            | Not started | -         |
+| Phase                            | Plans Complete | Status            | Completed  |
+| -------------------------------- | -------------- | ----------------- | ---------- |
+| 1. Wayland Integration & Testing | 3/3            | Complete          | 2026-03-07 |
+| 2. Error Handling Bugfix         | 0/1            | Planning Complete | -          |
