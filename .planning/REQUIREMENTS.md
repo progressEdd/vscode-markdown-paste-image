@@ -15,17 +15,17 @@ Requirements for initial Wayland integration. Each maps to roadmap phases.
 
 ### Wayland Integration Testing
 
-- [ ] **TEST-01**: Add integration tests that use actual wl-copy/wl-paste tools
-- [ ] **TEST-02**: Tests auto-detect display server (Wayland or X11)
-- [ ] **TEST-03**: Test all clipboard operations: getTextPlain, getTextHtml, getImage, getContentType
-- [ ] **TEST-04**: Tests run in VSCode test environment (vscodium)
+- [x] **TEST-01**: Add integration tests that use actual wl-copy/wl-paste tools
+- [x] **TEST-02**: Tests auto-detect display server (Wayland or X11)
+- [x] **TEST-03**: Test all clipboard operations: getTextPlain, getTextHtml, getImage, getContentType
+- [x] **TEST-04**: Tests run in VSCode test environment (vscodium)
 
 ### Backend Compatibility
 
-- [ ] **COMPAT-01**: Extension works identically on X11 and Wayland Linux systems
+- [x] **COMPAT-01**: Extension works identically on X11 and Wayland Linux systems
 - [ ] **COMPAT-02**: No user configuration required for display server detection
-- [ ] **COMPAT-03**: Existing X11 users experience no behavior changes
-- [ ] **COMPAT-04**: Wayland users can paste text, HTML, and images successfully
+- [x] **COMPAT-03**: Existing X11 users experience no behavior changes
+- [x] **COMPAT-04**: Wayland users can paste text, HTML, and images successfully
 
 ## Out of Scope
 
@@ -42,19 +42,19 @@ Explicitly excluded. Documented to prevent scope creep.
 
 Which phases cover which requirements. Updated during roadmap creation.
 
-| Requirement  | Phase   | Status  |
-| ------------ | ------- | ------- |
+| Requirement  | Phase   | Status   |
+| ------------ | ------- | -------- |
 | SUBMODULE-01 | Phase 1 | Complete |
 | SUBMODULE-02 | Phase 1 | Complete |
 | SUBMODULE-03 | Phase 1 | Complete |
-| TEST-01      | Phase 1 | Pending |
-| TEST-02      | Phase 1 | Pending |
-| TEST-03      | Phase 1 | Pending |
-| TEST-04      | Phase 1 | Pending |
-| COMPAT-01    | Phase 1 | Pending |
-| COMPAT-02    | Phase 1 | Pending |
-| COMPAT-03    | Phase 1 | Pending |
-| COMPAT-04    | Phase 1 | Pending |
+| TEST-01      | Phase 1 | Complete |
+| TEST-02      | Phase 1 | Complete |
+| TEST-03      | Phase 1 | Complete |
+| TEST-04      | Phase 1 | Complete |
+| COMPAT-01    | Phase 1 | Complete |
+| COMPAT-02    | Phase 1 | Pending  |
+| COMPAT-03    | Phase 1 | Complete |
+| COMPAT-04    | Phase 1 | Complete |
 
 **Coverage:**
 
