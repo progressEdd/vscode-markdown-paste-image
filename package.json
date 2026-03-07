@@ -3,19 +3,19 @@
   "displayName": "Markdown Paste",
   "description": "A smartly paste for markdown.",
   "version": "1.4.6",
-  "publisher": "telesoho",
+  "publisher": "progressEdd",
   "author": {
-    "name": "telesoho",
-    "email": "telesoho@gmail.com"
+    "name": "progressEdd",
+    "email": "progressEdd@gmail.com"
   },
   "license": "(MIT)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/telesoho/vscode-markdown-paste-image.git"
+    "url": "https://github.com/progressEdd/vscode-markdown-paste-image.git"
   },
-  "homepage": "https://github.com/telesoho/vscode-markdown-paste-image",
+  "homepage": "https://github.com/progressEdd/vscode-markdown-paste-image",
   "bugs": {
-    "url": "https://github.com/telesoho/vscode-markdown-paste-image/issues"
+    "url": "https://github.com/progressEdd/vscode-markdown-paste-image/issues"
   },
   "icon": "res/images/icon.png",
   "galleryBanner": {
