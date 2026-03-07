@@ -8,9 +8,53 @@ Smartly paste for Markdown.
 
 ## Requirements
 
-- `xclip` command be required (Linux)
+- **Linux**: `wl-clipboard` for Wayland or `xclip` for X11 (auto-detected)
 - `powershell` command be required (Win32)
 - `pbpaste` command be required (Mac)
+
+### Linux Clipboard Support
+
+This extension works seamlessly on both Wayland and X11 Linux systems with automatic display server detection.
+
+#### Wayland Users
+
+For Wayland systems (GNOME, KDE Plasma, Sway, etc.), install `wl-clipboard`:
+
+```bash
+# Debian/Ubuntu
+sudo apt install wl-clipboard
+
+# Arch Linux
+sudo pacman -S wl-clipboard
+
+# Fedora
+sudo dnf install wl-clipboard
+```
+
+#### X11 Users
+
+For X11 systems, install `xclip`:
+
+```bash
+# Debian/Ubuntu
+sudo apt install xclip
+
+# Arch Linux
+sudo pacman -S xclip
+
+# Fedora
+sudo dnf install xclip
+```
+
+#### Auto-Detection
+
+The extension automatically detects your display server:
+
+- Wayland users get `wl-copy`/`wl-paste` backend
+- X11 users get `xclip` backend
+- No configuration required
+
+If both are available, Wayland is preferred when running on a Wayland session.
 
 ## Features
 
@@ -325,7 +369,7 @@ Smartly paste for Markdown.
     }
   ]
   ```
-  
+
   You can also use **regex capture groups** in your `match` patterns. Each captured group can be referenced in `targetPath` and `linkPattern` as `$1`, `$2`, etc. This allows you to dynamically create folders or links based on parts of the Markdown filename or path.
 
   **Example:**
