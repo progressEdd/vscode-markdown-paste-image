@@ -52,9 +52,32 @@ class Paster {
   static async selectClipboardType(
     type: Set<xclip.ClipboardType> | xclip.ClipboardType
   ): Promise<xclip.ClipboardType> {
-    if (!(type instanceof Set)) {
-      return type;
+    Logger.log(
+      "selectClipboardType input:",
+      Paster.safeDescribeContentType(type)
+    );
+    Logger.log("selectClipboardType type:", typeof type);
+    if (type === undefined || type === null) {
+      Logger.log("selectClipboardType: type is undefined/null");
+      return xclip.ClipboardType.Unknown;
     }
+    if (!(type instanceof Set)) {
+      if (typeof type === "string") {
+        Logger.log("selectClipboardType: string value:", JSON.stringify(type));
+        if (!type.trim()) {
+          Logger.log("selectClipboardType: type is empty string");
+          return xclip.ClipboardType.Unknown;
+        }
+        return type;
+      }
+      Logger.log(
+        "selectClipboardType: type is not Set or string:",
+        typeof type
+      );
+      return xclip.ClipboardType.Unknown;
+    }
+    const typeArray = Array.from(type);
+    Logger.log("selectClipboardType: Set contains:", typeArray);
     if (
       this.config.autoSelectClipboardType == "never" ||
       (this.config.autoSelectClipboardType == "html&text" &&
@@ -65,7 +88,7 @@ class Paster {
         {
           modal: true,
         },
-        ...Array.from(type)
+        ...typeArray
       );
       if (selected) {
         return selected;
@@ -73,62 +96,125 @@ class Paster {
       return xclip.ClipboardType.Unknown;
     }
     const priorityOrdering = this.config.autoSelectClipboardTypePriority;
-    for (const theType of priorityOrdering)
-      if (type.has(theType)) return theType;
+    Logger.log("selectClipboardType: priorityOrdering:", priorityOrdering);
+    for (const theType of priorityOrdering) {
+      Logger.log("selectClipboardType: checking priority:", theType);
+      if (type.has(theType)) {
+        Logger.log("selectClipboardType: found match:", theType);
+        return theType;
+      }
+    }
+    Logger.log("selectClipboardType: no priority match, returning Unknown");
     return xclip.ClipboardType.Unknown;
+  }
+
+  private static safeDescribeContentType(contentType: unknown): string {
+    try {
+      if (contentType instanceof Set) {
+        return `Set(${Array.from(contentType).join(",")})`;
+      }
+      if (typeof contentType === "string") {
+        return contentType.length > 0 ? contentType : "<empty string>";
+      }
+      return JSON.stringify(contentType);
+    } catch {
+      return "<unserializable content type>";
+    }
   }
 
   /**
    * Paste text
    */
   public static async paste() {
-    const shell = xclip.getShell();
-    const cb = shell.getClipboard();
-    const ctx_type = await this.selectClipboardType(await cb.getContentType());
+    console.log("=== PASTE CALLED ===");
+    Logger.log("paste() called");
+    try {
+      const shell = xclip.getShell();
+      console.log("shell:", shell);
+      Logger.log("shell:", shell?.constructor?.name || typeof shell);
+      const cb = shell.getClipboard();
+      console.log("clipboard:", cb);
+      Logger.log("clipboard:", cb?.constructor?.name || typeof cb);
 
-    let enableHtmlConverter = this.config.enableHtmlConverter;
-    let enableRulesForHtml = this.config.enableRulesForHtml;
-    let turndownOptions = this.config.turndownOptions;
+      let contentType;
+      try {
+        Logger.log("About to call getContentType...");
+        contentType = await cb.getContentType();
+        Logger.log("getContentType returned, typeof:", typeof contentType);
+        Logger.log("getContentType returned, value:", contentType);
+      } catch (innerError) {
+        Logger.log("getContentType threw error:", innerError);
+        Logger.log("getContentType error type:", typeof innerError);
+        Logger.log(
+          "getContentType error constructor:",
+          innerError?.constructor?.name
+        );
+        contentType = xclip.ClipboardType.Unknown;
+      }
+      console.log("contentType:", contentType);
+      Logger.log(
+        "contentType raw:",
+        Paster.safeDescribeContentType(contentType)
+      );
+      Logger.log("contentType type:", typeof contentType);
+      Logger.log("contentType isArray:", Array.isArray(contentType));
+      if (contentType instanceof Set) {
+        Logger.log("contentType is Set, values:", Array.from(contentType));
+      }
 
-    Logger.log("Clipboard Type:", ctx_type);
-    switch (ctx_type) {
-      case xclip.ClipboardType.Html:
-        if (enableHtmlConverter) {
-          const html = await cb.getTextHtml();
-          let markdown = toMarkdown(html, turndownOptions);
-          if (enableRulesForHtml) {
-            markdown = Paster.parse(markdown);
+      const ctx_type = await this.selectClipboardType(contentType);
+      Logger.log("ctx_type:", ctx_type);
+
+      let enableHtmlConverter = this.config.enableHtmlConverter;
+      let enableRulesForHtml = this.config.enableRulesForHtml;
+      let turndownOptions = this.config.turndownOptions;
+
+      Logger.log("Clipboard Type:", ctx_type);
+      switch (ctx_type) {
+        case xclip.ClipboardType.Html:
+          if (enableHtmlConverter) {
+            const html = await cb.getTextHtml();
+            let markdown = toMarkdown(html, turndownOptions);
+            if (enableRulesForHtml) {
+              markdown = Paster.parse(markdown);
+            }
+            await Paster.parseByAI(markdown);
+          } else {
+            const text = await cb.getTextPlain();
+            if (text) {
+              let newContent = Paster.parse(text);
+              await Paster.parseByAI(newContent);
+            }
           }
-          await Paster.parseByAI(markdown);
-        } else {
+          break;
+        case xclip.ClipboardType.Text:
           const text = await cb.getTextPlain();
           if (text) {
             let newContent = Paster.parse(text);
             await Paster.parseByAI(newContent);
           }
-        }
-        break;
-      case xclip.ClipboardType.Text:
-        const text = await cb.getTextPlain();
-        if (text) {
-          let newContent = Paster.parse(text);
-          await Paster.parseByAI(newContent);
-        }
-        break;
-      case xclip.ClipboardType.Image:
-        if (false === isRemoteMode()) {
-          Paster.pasteImage();
-        } else {
-          // show warring dialog
-          Logger.showErrorMessage(
-            "Paste Image is not available in Remote Mode (SSH, WSL, Dev Container). " +
-              "Please paste the image locally, or use VS Code’s built-in paste feature instead."
-          );
-        }
-        break;
-      case xclip.ClipboardType.Unknown:
-        Logger.log("Unknown type");
-        break;
+          break;
+        case xclip.ClipboardType.Image:
+          if (false === isRemoteMode()) {
+            Paster.pasteImage();
+          } else {
+            // show warring dialog
+            Logger.showErrorMessage(
+              "Paste Image is not available in Remote Mode (SSH, WSL, Dev Container). " +
+                "Please paste the image locally, or use VS Code’s built-in paste feature instead."
+            );
+          }
+          break;
+        case xclip.ClipboardType.Unknown:
+          Logger.log("Unknown type");
+          break;
+      }
+    } catch (e) {
+      const errorMsg = e instanceof Error ? e.message : String(e);
+      const errorStack = e instanceof Error ? e.stack : "";
+      Logger.log("paste error:", errorMsg);
+      console.error("paste error:", e);
+      console.error("stack:", errorStack);
     }
   }
 

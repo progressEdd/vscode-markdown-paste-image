@@ -18,8 +18,8 @@
 **Run Commands:**
 
 ```bash
-npm run test              # Run all tests (compiles first)
-npm run pretest           # Compile tests and copy resources
+bun run test              # Run all tests (compiles first)
+bun run pretest           # Compile tests and copy resources
 ```
 
 **Test Process:**
@@ -339,7 +339,7 @@ export async function run(): Promise<void> {
 **Pretest Script:**
 
 ```json
-"pretest": "rimraf ./out_test && npm run prettier && npm run lint && tsc --project ./ts-test.json && npx cpy-cli \"res/**/*\" \"out_test/res\""
+"pretest": "rimraf ./out_test && bun run prettier && bun run lint && tsc --project ./ts-test.json && npx cpy-cli \"res/**/*\" \"out_test/res\""
 ```
 
 Steps:

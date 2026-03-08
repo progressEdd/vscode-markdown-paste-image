@@ -173,14 +173,14 @@ vscode-markdown-paste-image/
 **out/:**
 
 - Purpose: Compiled JavaScript output
-- Generated: Yes (by `npm run compile`)
+- Generated: Yes (by `bun run compile`)
 - Committed: No (in .gitignore)
 - Entry: `out/extension.js`
 
 **out_test/:**
 
 - Purpose: Compiled test output
-- Generated: Yes (by `npm run pretest`)
+- Generated: Yes (by `bun run pretest`)
 - Committed: No
 
 **xclip/:**

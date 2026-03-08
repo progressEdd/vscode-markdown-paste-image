@@ -56,10 +56,44 @@ Which phases cover which requirements. Updated during roadmap creation.
 | COMPAT-03    | Phase 1 | Complete |
 | COMPAT-04    | Phase 1 | Complete |
 
+## v1.1 Requirements
+
+Requirements for error handling bug fix.
+
+### Error Handling
+
+- [ ] **BUG-01**: Fix unhandled promise rejections in all command handlers
+  - `telesoho.insertMathSymbol`: Add try/catch for `showQuickPick()` and handle nested `editor.edit()` promises
+  - `telesoho.MarkdownPaste`: Await `Paster.paste()` - **Critical: Context menu fails without this**
+  - `telesoho.MarkdownDownload`: Await `Paster.pasteDownload()`
+  - `telesoho.MarkdownPasteCode`: Await `Paster.pasteCode()`
+  - `telesoho.MarkdownRuby`: Already OK (not async)
+  - Add all command registrations to `context.subscriptions`
+
+## Traceability
+
+Which phases cover which requirements. Updated during roadmap creation.
+
+| Requirement  | Phase   | Status      |
+| ------------ | ------- | ----------- |
+| SUBMODULE-01 | Phase 1 | Complete    |
+| SUBMODULE-02 | Phase 1 | Complete    |
+| SUBMODULE-03 | Phase 1 | Complete    |
+| TEST-01      | Phase 1 | Complete    |
+| TEST-02      | Phase 1 | Complete    |
+| TEST-03      | Phase 1 | Complete    |
+| TEST-04      | Phase 1 | Complete    |
+| COMPAT-01    | Phase 1 | Complete    |
+| COMPAT-02    | Phase 1 | Complete    |
+| COMPAT-03    | Phase 1 | Complete    |
+| COMPAT-04    | Phase 1 | Complete    |
+| BUG-01       | Phase 2 | Not Started |
+
 **Coverage:**
 
 - v1 requirements: 11 total
-- Mapped to phases: 11
+- v1.1 requirements: 1 total
+- Mapped to phases: 12
 - Unmapped: 0 ✓
 
 ---

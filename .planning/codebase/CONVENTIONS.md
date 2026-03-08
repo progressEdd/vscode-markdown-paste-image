@@ -49,7 +49,7 @@
 - Plugins: `prettier`, `@typescript-eslint`
 - Extends: `prettier` config
 - Rules: `"prettier/prettier": ["error"]`
-- Run command: `npm run lint` (runs `eslint src --ext ts`)
+- Run command: `bun run lint` (runs `eslint src --ext ts`)
 
 **TypeScript Configuration:**
 

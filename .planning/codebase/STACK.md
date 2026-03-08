@@ -21,7 +21,8 @@
 
 **Package Manager:**
 
-- npm 10.8.2
+- bun (preferred)
+- npm 10.8.2 (fallback)
 - Lockfile: `package-lock.json` present (lockfileVersion: 3)
 
 ## Frameworks
@@ -80,7 +81,7 @@
 
 - ESLint config: `.eslintrc.json`
 - Prettier config: `.prettierrc.json` (endOfLine: auto)
-- Pre-commit: npm run lint via compile script
+- Pre-commit: bun run lint via compile script
 
 ## Platform Requirements
 
