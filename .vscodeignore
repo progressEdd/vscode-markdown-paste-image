@@ -9,3 +9,5 @@ src/**
 .gitignore
 tsconfig.json
 extension/xclip/node_modules/**
+xclip/node_modules/**
+xclip/.git/**
