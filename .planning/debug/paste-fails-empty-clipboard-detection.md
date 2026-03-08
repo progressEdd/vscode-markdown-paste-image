@@ -88,7 +88,7 @@ started: Never worked - fresh install of extension
 
 - timestamp: 2026-03-07T15:15:00Z
   checked: Wayland script content
-  found: wayland_get_clipboard_content_type.sh echoes "no wl-paste" to stdout (not stderr!) when wl-paste is missing
+  found: wl_clipboard_get_clipboard_content_type.sh echoes "no wl-paste" to stdout (not stderr!) when wl-paste is missing
   implication: Script error message is lost when it exits 1 because runCommand only captures stderr
 
 - timestamp: 2026-03-07T15:20:00Z

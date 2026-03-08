@@ -379,7 +379,7 @@ Verified patterns from official sources:
 ### wl-clipboard Usage (Plain Text)
 
 ```bash
-# Source: https://raw.githubusercontent.com/progressEdd/xclip/wayland-clipboard-support/res/scripts/wayland_get_clipboard_text_plain.sh
+# Source: https://raw.githubusercontent.com/progressEdd/xclip/wayland-clipboard-support/res/scripts/wl_clipboard_get_clipboard_text_plain.sh
 #!/bin/sh
 # Require wl-paste
 command -v wl-paste >/dev/null 2>&1 || { echo "no wl-paste" >&1; exit 1; }
@@ -390,7 +390,7 @@ wl-paste --no-newline
 ### wl-clipboard Usage (Image)
 
 ```bash
-# Source: https://raw.githubusercontent.com/progressEdd/xclip/wayland-clipboard-support/res/scripts/wayland_save_clipboard_png.sh
+# Source: https://raw.githubusercontent.com/progressEdd/xclip/wayland-clipboard-support/res/scripts/wl_clipboard_save_clipboard_png.sh
 #!/bin/sh
 command -v wl-paste >/dev/null 2>&1 || { echo "no wl-paste" >&1; exit 1; }
 wl-paste --type image/png > "$1"
@@ -400,7 +400,7 @@ echo "$1"
 ### wl-clipboard Usage (Content Type Detection)
 
 ```bash
-# Source: https://raw.githubusercontent.com/progressEdd/xclip/wayland-clipboard-support/res/scripts/wayland_get_clipboard_content_type.sh
+# Source: https://raw.githubusercontent.com/progressEdd/xclip/wayland-clipboard-support/res/scripts/wl_clipboard_get_clipboard_content_type.sh
 #!/bin/sh
 command -v wl-paste >/dev/null 2>&1 || { echo "no wl-paste" >&1; exit 1; }
 # List available MIME types
@@ -418,7 +418,7 @@ class WaylandClipboard extends BaseClipboard {
     const script = path.join(
       __dirname,
       this.SCRIPT_PATH,
-      "wayland_get_clipboard_text_plain.sh"
+      "wl_clipboard_get_clipboard_text_plain.sh"
     );
     const shell = getShell();
     const data: string = await shell.runScript(script);
@@ -430,7 +430,7 @@ class WaylandClipboard extends BaseClipboard {
     const script = path.join(
       __dirname,
       this.SCRIPT_PATH,
-      "wayland_save_clipboard_png.sh"
+      "wl_clipboard_save_clipboard_png.sh"
     );
     const shell = getShell();
     const data: string = await shell.runScript(script, [imagePath]);
@@ -441,7 +441,7 @@ class WaylandClipboard extends BaseClipboard {
     const script = path.join(
       __dirname,
       this.SCRIPT_PATH,
-      "wayland_get_clipboard_content_type.sh"
+      "wl_clipboard_get_clipboard_content_type.sh"
     );
     try {
       const shell = getShell();

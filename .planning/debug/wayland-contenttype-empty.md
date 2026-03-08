@@ -45,7 +45,7 @@ started: Observed in current run at 03-07 16:33; historical start time unknown.
   implication: previous attempt to fix content-type handling did not resolve issue
 
 - timestamp: 2026-03-07T17:10:00Z
-  checked: direct test of wayland_get_clipboard_content_type.sh script
+  checked: direct test of wl_clipboard_get_clipboard_content_type.sh script
   found: Script outputs: "chromium/x-internal-source-rfh-token\n text/plain;charset=utf-8\n text/plain\n ...". This produces empty string entries when split on newlines
   implication: Empty strings in type list could cause issues if not filtered out before processing
 - timestamp: 2026-03-07T17:10:00Z
